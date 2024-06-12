@@ -13,3 +13,5 @@ Ryan Kast, Sean Simmons, Nita Rome, Xian Adiconis, Lisa Melamed, Kate McCabe, Do
 
 3Stanley Center for Psychiatric Research, Broad Institute of MIT and Harvard, Cambridge, MA, USA
 
+
+SingleCellCode contains the code the the single cell analysis, with Updated.Analysis.RNASeq.Upload.R being the main script and ViolinGridNew_cluster.R being for making violin grid plots.
