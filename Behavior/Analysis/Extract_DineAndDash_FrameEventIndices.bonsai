@@ -1,0 +1,412 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WorkflowBuilder Version="2.7.1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
+                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
+                 xmlns="https://bonsai-rx.org/2018/workflow">
+  <Workflow>
+    <Nodes>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:FileCapture">
+          <cv:FileName>Z:\RKDATA\Behavior\FiberPhotometryData\ZIPathway_GCaMP8m\Cohort2\DineAndDash\Cohort2A\Day4\JAX-16M-2L\JAX-16M-2L_Arena_1.mp4</cv:FileName>
+          <cv:PlaybackRate>80000000000000</cv:PlaybackRate>
+          <cv:StartPosition>0</cv:StartPosition>
+          <cv:PositionUnits>Frames</cv:PositionUnits>
+          <cv:Loop>false</cv:Loop>
+          <cv:Playing>true</cv:Playing>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="GroupWorkflow">
+        <Name>Loom</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="WorkflowInput">
+              <Name>Source1</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:Crop">
+                <cv:RegionOfInterest>
+                  <cv:X>480</cv:X>
+                  <cv:Y>45</cv:Y>
+                  <cv:Width>20</cv:Width>
+                  <cv:Height>20</cv:Height>
+                </cv:RegionOfInterest>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:Grayscale" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:Threshold">
+                <cv:ThresholdValue>120</cv:ThresholdValue>
+                <cv:MaxValue>255</cv:MaxValue>
+                <cv:ThresholdType>Binary</cv:ThresholdType>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:FindContours">
+                <cv:Mode>External</cv:Mode>
+                <cv:Method>ChainApproxNone</cv:Method>
+                <cv:Offset>
+                  <cv:X>0</cv:X>
+                  <cv:Y>0</cv:Y>
+                </cv:Offset>
+                <cv:MinArea>3</cv:MinArea>
+                <cv:MaxArea>4000</cv:MaxArea>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:BinaryRegionAnalysis" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:LargestBinaryRegion" />
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="cv:Centroid" />
+              </Builder>
+            </Expression>
+            <Expression xsi:type="WorkflowOutput" />
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+          </Edges>
+        </Workflow>
+      </Expression>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="io:CsvWriter">
+          <io:FileName>Z:\RKDATA\Behavior\FiberPhotometryData\Analysis\DLC_DineAndDash\ZI_Pathway_GCaMP_Arena\JAX-16M-1R_LoomIndices.csv</io:FileName>
+          <io:Delimiter>,</io:Delimiter>
+          <io:ListSeparator />
+          <io:Append>false</io:Append>
+          <io:Overwrite>true</io:Overwrite>
+          <io:Suffix>None</io:Suffix>
+          <io:IncludeHeader>true</io:IncludeHeader>
+        </Builder>
+      </Expression>
+      <Expression xsi:type="GroupWorkflow">
+        <Name>LED1</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="WorkflowInput">
+              <Name>Source1</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:Crop">
+                <cv:RegionOfInterest>
+                  <cv:X>202</cv:X>
+                  <cv:Y>390</cv:Y>
+                  <cv:Width>20</cv:Width>
+                  <cv:Height>20</cv:Height>
+                </cv:RegionOfInterest>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:Grayscale" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:Threshold">
+                <cv:ThresholdValue>230</cv:ThresholdValue>
+                <cv:MaxValue>255</cv:MaxValue>
+                <cv:ThresholdType>Binary</cv:ThresholdType>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:FindContours">
+                <cv:Mode>External</cv:Mode>
+                <cv:Method>ChainApproxNone</cv:Method>
+                <cv:Offset>
+                  <cv:X>0</cv:X>
+                  <cv:Y>0</cv:Y>
+                </cv:Offset>
+                <cv:MinArea>3</cv:MinArea>
+                <cv:MaxArea>100000</cv:MaxArea>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:BinaryRegionAnalysis" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:LargestBinaryRegion" />
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="cv:Centroid" />
+              </Builder>
+            </Expression>
+            <Expression xsi:type="WorkflowOutput" />
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+          </Edges>
+        </Workflow>
+      </Expression>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="io:CsvWriter">
+          <io:FileName>Z:\RKDATA\Behavior\FiberPhotometryData\Analysis\DLC_DineAndDash\ZI_Pathway_GCaMP_Arena\JAX-16M-1R_LED1Indices.csv</io:FileName>
+          <io:Delimiter>,</io:Delimiter>
+          <io:ListSeparator />
+          <io:Append>false</io:Append>
+          <io:Overwrite>true</io:Overwrite>
+          <io:Suffix>Timestamp</io:Suffix>
+          <io:IncludeHeader>true</io:IncludeHeader>
+        </Builder>
+      </Expression>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="GroupWorkflow">
+          <Name>LED2</Name>
+          <Workflow>
+            <Nodes>
+              <Expression xsi:type="WorkflowInput">
+                <Name>Source1</Name>
+              </Expression>
+              <Expression xsi:type="Combinator">
+                <Combinator xsi:type="cv:Crop">
+                  <cv:RegionOfInterest>
+                    <cv:X>240</cv:X>
+                    <cv:Y>327</cv:Y>
+                    <cv:Width>20</cv:Width>
+                    <cv:Height>20</cv:Height>
+                  </cv:RegionOfInterest>
+                </Combinator>
+              </Expression>
+              <Expression xsi:type="Combinator">
+                <Combinator xsi:type="cv:Grayscale" />
+              </Expression>
+              <Expression xsi:type="Combinator">
+                <Combinator xsi:type="cv:Threshold">
+                  <cv:ThresholdValue>235</cv:ThresholdValue>
+                  <cv:MaxValue>255</cv:MaxValue>
+                  <cv:ThresholdType>Binary</cv:ThresholdType>
+                </Combinator>
+              </Expression>
+              <Expression xsi:type="Combinator">
+                <Combinator xsi:type="cv:FindContours">
+                  <cv:Mode>External</cv:Mode>
+                  <cv:Method>ChainApproxNone</cv:Method>
+                  <cv:Offset>
+                    <cv:X>0</cv:X>
+                    <cv:Y>0</cv:Y>
+                  </cv:Offset>
+                  <cv:MinArea>3</cv:MinArea>
+                  <cv:MaxArea>100000</cv:MaxArea>
+                </Combinator>
+              </Expression>
+              <Expression xsi:type="Combinator">
+                <Combinator xsi:type="cv:BinaryRegionAnalysis" />
+              </Expression>
+              <Expression xsi:type="Combinator">
+                <Combinator xsi:type="cv:LargestBinaryRegion" />
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="Combinator">
+                  <Combinator xsi:type="cv:Centroid" />
+                </Builder>
+              </Expression>
+              <Expression xsi:type="WorkflowOutput" />
+            </Nodes>
+            <Edges>
+              <Edge From="0" To="1" Label="Source1" />
+              <Edge From="1" To="2" Label="Source1" />
+              <Edge From="2" To="3" Label="Source1" />
+              <Edge From="3" To="4" Label="Source1" />
+              <Edge From="4" To="5" Label="Source1" />
+              <Edge From="5" To="6" Label="Source1" />
+              <Edge From="6" To="7" Label="Source1" />
+              <Edge From="7" To="8" Label="Source1" />
+            </Edges>
+          </Workflow>
+        </Builder>
+      </Expression>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="io:CsvWriter">
+          <io:FileName>Z:\RKDATA\Behavior\FiberPhotometryData\Slc30a3_Nos1_ZI\FOL\15-1C-2\Day5_RotaryJoint\15-1C-2-Day5_LED2_VideoIndices.csv</io:FileName>
+          <io:Delimiter>,</io:Delimiter>
+          <io:ListSeparator />
+          <io:Append>false</io:Append>
+          <io:Overwrite>true</io:Overwrite>
+          <io:Suffix>Timestamp</io:Suffix>
+          <io:IncludeHeader>true</io:IncludeHeader>
+        </Builder>
+      </Expression>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="GroupWorkflow">
+          <Name>LED3</Name>
+          <Workflow>
+            <Nodes>
+              <Expression xsi:type="WorkflowInput">
+                <Name>Source1</Name>
+              </Expression>
+              <Expression xsi:type="Combinator">
+                <Combinator xsi:type="cv:Crop">
+                  <cv:RegionOfInterest>
+                    <cv:X>250</cv:X>
+                    <cv:Y>245</cv:Y>
+                    <cv:Width>20</cv:Width>
+                    <cv:Height>20</cv:Height>
+                  </cv:RegionOfInterest>
+                </Combinator>
+              </Expression>
+              <Expression xsi:type="Combinator">
+                <Combinator xsi:type="cv:Grayscale" />
+              </Expression>
+              <Expression xsi:type="Combinator">
+                <Combinator xsi:type="cv:Threshold">
+                  <cv:ThresholdValue>230</cv:ThresholdValue>
+                  <cv:MaxValue>255</cv:MaxValue>
+                  <cv:ThresholdType>Binary</cv:ThresholdType>
+                </Combinator>
+              </Expression>
+              <Expression xsi:type="Combinator">
+                <Combinator xsi:type="cv:FindContours">
+                  <cv:Mode>External</cv:Mode>
+                  <cv:Method>ChainApproxNone</cv:Method>
+                  <cv:Offset>
+                    <cv:X>0</cv:X>
+                    <cv:Y>0</cv:Y>
+                  </cv:Offset>
+                  <cv:MinArea>3</cv:MinArea>
+                  <cv:MaxArea>100000</cv:MaxArea>
+                </Combinator>
+              </Expression>
+              <Expression xsi:type="Combinator">
+                <Combinator xsi:type="cv:BinaryRegionAnalysis" />
+              </Expression>
+              <Expression xsi:type="Combinator">
+                <Combinator xsi:type="cv:LargestBinaryRegion" />
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="Combinator">
+                  <Combinator xsi:type="cv:Centroid" />
+                </Builder>
+              </Expression>
+              <Expression xsi:type="WorkflowOutput" />
+            </Nodes>
+            <Edges>
+              <Edge From="0" To="1" Label="Source1" />
+              <Edge From="1" To="2" Label="Source1" />
+              <Edge From="2" To="3" Label="Source1" />
+              <Edge From="3" To="4" Label="Source1" />
+              <Edge From="4" To="5" Label="Source1" />
+              <Edge From="5" To="6" Label="Source1" />
+              <Edge From="6" To="7" Label="Source1" />
+              <Edge From="7" To="8" Label="Source1" />
+            </Edges>
+          </Workflow>
+        </Builder>
+      </Expression>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="io:CsvWriter">
+          <io:FileName>Z:\RKDATA\Behavior\FiberPhotometryData\Slc30a3_Nos1_ZI\FOL\15-1C-2\Day5_RotaryJoint\15-1C-2-Day5_LED3-VideoIndices.csv</io:FileName>
+          <io:Delimiter>,</io:Delimiter>
+          <io:ListSeparator />
+          <io:Append>false</io:Append>
+          <io:Overwrite>true</io:Overwrite>
+          <io:Suffix>Timestamp</io:Suffix>
+          <io:IncludeHeader>true</io:IncludeHeader>
+        </Builder>
+      </Expression>
+      <Expression xsi:type="GroupWorkflow">
+        <Name>LED4</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="WorkflowInput">
+              <Name>Source1</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:Crop">
+                <cv:RegionOfInterest>
+                  <cv:X>228</cv:X>
+                  <cv:Y>140</cv:Y>
+                  <cv:Width>20</cv:Width>
+                  <cv:Height>20</cv:Height>
+                </cv:RegionOfInterest>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:Grayscale" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:Threshold">
+                <cv:ThresholdValue>210</cv:ThresholdValue>
+                <cv:MaxValue>255</cv:MaxValue>
+                <cv:ThresholdType>Binary</cv:ThresholdType>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:FindContours">
+                <cv:Mode>External</cv:Mode>
+                <cv:Method>ChainApproxNone</cv:Method>
+                <cv:Offset>
+                  <cv:X>0</cv:X>
+                  <cv:Y>0</cv:Y>
+                </cv:Offset>
+                <cv:MinArea>3</cv:MinArea>
+                <cv:MaxArea>100000</cv:MaxArea>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:BinaryRegionAnalysis" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:LargestBinaryRegion" />
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="cv:Centroid" />
+              </Builder>
+            </Expression>
+            <Expression xsi:type="WorkflowOutput" />
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+          </Edges>
+        </Workflow>
+      </Expression>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="io:CsvWriter">
+          <io:FileName>Z:\RKDATA\Behavior\FiberPhotometryData\Slc30a3_Nos1_ZI\FOL\15-1C-2\Day6_FOL_RotaryJointPt2\15-1C-2-Day6pt2_LED4_LED2Indices.csv</io:FileName>
+          <io:Delimiter>,</io:Delimiter>
+          <io:ListSeparator />
+          <io:Append>false</io:Append>
+          <io:Overwrite>true</io:Overwrite>
+          <io:Suffix>Timestamp</io:Suffix>
+          <io:IncludeHeader>true</io:IncludeHeader>
+        </Builder>
+      </Expression>
+    </Nodes>
+    <Edges>
+      <Edge From="0" To="1" Label="Source1" />
+      <Edge From="0" To="3" Label="Source1" />
+      <Edge From="0" To="5" Label="Source1" />
+      <Edge From="0" To="7" Label="Source1" />
+      <Edge From="0" To="9" Label="Source1" />
+      <Edge From="1" To="2" Label="Source1" />
+      <Edge From="3" To="4" Label="Source1" />
+      <Edge From="5" To="6" Label="Source1" />
+      <Edge From="7" To="8" Label="Source1" />
+      <Edge From="9" To="10" Label="Source1" />
+    </Edges>
+  </Workflow>
+</WorkflowBuilder>
