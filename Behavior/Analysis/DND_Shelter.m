@@ -1,15 +1,5 @@
-mouselist = {'63-5-1',
-            %'63-5-2',
-            '63-5-3',
-            '63-5-4',
-            '63-5-5',
-            '78-1-1',
-            '78-1-2',
-            '78-1-3',
-            '78-1-4',
-            '78-1-5'};
-%%
-mouselist = {'JAX-15F-2L'};
+
+mouselist = {''};
 
 outputDirectory = 'Shelter_matlab_050324_4PM'; % Specify the output directory name
 
