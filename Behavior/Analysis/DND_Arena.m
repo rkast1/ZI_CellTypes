@@ -1,9 +1,5 @@
 
-mouselist = {'78-1-1',
-            '78-1-2',
-            '78-1-3',
-            '78-1-4',
-            '78-1-5'}; 
+mouselist = {}; 
 
 
 outputDirectory = 'test'; % Specify the output directory name
@@ -93,7 +89,7 @@ function outputArray = ExtractEscapes(Session, Mouse)
     mouse_crossing = crossing(mouse_present,1:length(mouse_present),0.5);
 
     
-    LoomIndices = readmatrix(strcat(Mouse, '_Arena_LoomIndices.csv'))
+    LoomIndices = readmatrix(strcat(Mouse, 'Day4_LoomIndices.csv'))
     loomframes = zeros(size(LoomIndices,1),1);
 
     %detect looms from reflected indicator
