@@ -1,5 +1,7 @@
 # ZI_CellTypes
 
+DOI: 10.5281/zenodo.13732698
+
 Code associated with the analysis described in 
 
 "Multimodal analysis reveals cellular diversity and divergent circuits of the zona incerta" 
